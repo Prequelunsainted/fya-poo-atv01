@@ -1,0 +1,85 @@
+public class Cofre
+{
+    // Encapsulamento
+    private string _dono;
+    private string _senha;
+    private bool _estaAberto;
+    private int _tentativasErradas;
+
+    // Construtor
+    public Cofre(string dono, string senha)
+    {
+        _dono = dono;
+        _senha = senha;
+        _estaAberto = false;
+        _tentativasErradas = 0;
+    }
+
+    // Propriedades
+    public string Dono
+    {
+        get { return _dono; }
+        set { _dono = value; }
+    }
+
+    public bool EstaAberto
+    {
+        get { return _estaAberto; } // somente leitura
+    }
+
+    public int TentativasErradas
+    {
+        get { return _tentativasErradas; }
+    }
+
+    // Método para abrir o cofre
+    public string Abrir(string senhaInformada)
+    {
+        if (_tentativasErradas >= 3)
+        {
+            return "Cofre bloqueado!";
+        }
+
+        if (senhaInformada == _senha)
+        {
+            _estaAberto = true;
+            _tentativasErradas = 0;
+            return "Cofre aberto com sucesso!";
+        }
+        else
+        {
+            _tentativasErradas++;
+            return "Senha incorreta!";
+        }
+    }
+
+    // Método para fechar
+    public void Fechar()
+    {
+        _estaAberto = false;
+    }
+
+    // Método para alterar senha
+    public string AlterarSenha(string senhaAntiga, string novaSenha)
+    {
+        if (!_estaAberto)
+        {
+            return "Erro: o cofre precisa estar aberto.";
+        }
+
+        if (senhaAntiga != _senha)
+        {
+            return "Erro: senha antiga incorreta.";
+        }
+
+        _senha = novaSenha;
+        return "Senha alterada com sucesso!";
+    }
+
+    // ToString
+    public override string ToString()
+    {
+        return $"Dono: {_dono}, Estado: {(_estaAberto ? "Aberto" : "Fechado")}, " +
+               $"Tentativas Erradas: {_tentativasErradas}";
+    }
+}

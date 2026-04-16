@@ -1,0 +1,85 @@
+public class Conta
+{
+    // Encapsulamento
+    private readonly int _numero;
+    private string _titular;
+    private double _saldo;
+    private double _limite;
+
+    // Construtor
+    public Conta(int numero, string titular)
+    {
+        _numero = numero;
+        _titular = titular;
+        _saldo = 0;
+        _limite = 500;
+    }
+
+    // Propriedades
+    public int Numero
+    {
+        get { return _numero; } // somente leitura
+    }
+
+    public string Titular
+    {
+        get { return _titular; }
+        set { _titular = value; }
+    }
+
+    public double Saldo
+    {
+        get { return _saldo; } // não pode alterar direto
+    }
+
+    public double Limite
+    {
+        get { return _limite; }
+    }
+
+    // Campos calculados
+    public double SaldoTotal
+    {
+        get { return _saldo + _limite; }
+    }
+
+    public string StatusConta
+    {
+        get { return _saldo < 0 ? "Negativo" : "Positivo"; }
+    }
+
+    // Métodos
+
+    public bool Depositar(double valor)
+    {
+        if (valor <= 0)
+        {
+            return false;
+        }
+
+        _saldo += valor;
+        return true;
+    }
+
+    public bool Sacar(double valor)
+    {
+        if (valor <= 0)
+        {
+            return false;
+        }
+
+        if (valor > SaldoTotal)
+        {
+            return false;
+        }
+
+        _saldo -= valor;
+        return true;
+    }
+
+    // ToString
+    public override string ToString()
+    {
+        return $"Conta: {_numero} | Titular: {_titular} | Saldo: {_saldo:F2} | Limite: {_limite:F2}";
+    }
+}

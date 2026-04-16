@@ -1,0 +1,93 @@
+public class PersonagemRPG
+{
+    // Encapsulamento
+    private string _nome;
+    private string _classe;
+    private int _nivel;
+    private double _vidaAtual;
+    private double _vidaMaxima;
+
+    // Construtor
+    public PersonagemRPG(string nome, string classe)
+    {
+        _nome = nome;
+        _classe = classe;
+        _nivel = 1;
+
+        if (classe.ToLower() == "guerreiro")
+        {
+            _vidaMaxima = 150;
+        }
+        else if (classe.ToLower() == "mago")
+        {
+            _vidaMaxima = 80;
+        }
+        else
+        {
+            _vidaMaxima = 100; // padrão caso venha algo inválido
+        }
+
+        _vidaAtual = _vidaMaxima;
+    }
+
+    // Propriedades
+    public string Nome => _nome;
+    public string Classe => _classe;
+    public int Nivel => _nivel;
+    public double VidaAtual => _vidaAtual;
+    public double VidaMaxima => _vidaMaxima;
+
+    // Status de vida (campo calculado)
+    public bool EstaMorto
+    {
+        get { return _vidaAtual <= 0; }
+    }
+
+    // Métodos
+
+    public void ReceberDano(double pontos)
+    {
+        if (EstaMorto) return;
+
+        _vidaAtual -= pontos;
+
+        if (_vidaAtual < 0)
+            _vidaAtual = 0;
+    }
+
+    public void Curar(double pontos)
+    {
+        if (EstaMorto) return;
+
+        _vidaAtual += pontos;
+
+        if (_vidaAtual > _vidaMaxima)
+            _vidaAtual = _vidaMaxima;
+    }
+
+    public void SubirNivel()
+    {
+        if (EstaMorto) return;
+
+        if (_nivel >= 99) return;
+
+        _nivel++;
+
+        _vidaMaxima *= 1.10; // aumenta 10%
+        _vidaAtual = _vidaMaxima; // restaura vida
+    }
+
+    // Método extra obrigatório pela regra
+    public void Ressuscitar()
+    {
+        if (!EstaMorto) return;
+
+        _vidaAtual = _vidaMaxima * 0.5; // volta com 50% da vida
+    }
+
+    // ToString
+    public override string ToString()
+    {
+        return $"{_nome} ({_classe}) - Lvl {_nivel} - HP: {_vidaAtual:F0}/{_vidaMaxima:F0}";
+    }
+}

@@ -1,0 +1,71 @@
+public class Lampada
+{
+    // Encapsulamento
+    private string _marca;
+    private readonly string _tecnologia;
+    private bool _ligada;
+    private int _brilho;
+
+    // Construtor
+    public Lampada(string marca, string tecnologia)
+    {
+        _marca = marca;
+        _tecnologia = tecnologia;
+        _ligada = false;   
+        _brilho = 100;     
+    }
+
+    // Propriedades
+    public string Marca
+    {
+        get { return _marca; }
+        set { _marca = value; }
+    }
+
+    public string Tecnologia
+    {
+        get { return _tecnologia; }
+    }
+
+    public bool Ligada
+    {
+        get { return _ligada; }
+    }
+
+    public int Brilho
+    {
+        get { return _brilho; }
+    }
+
+    // Alternar estado (liga/desliga)
+    public void Alternar()
+    {
+        _ligada = !_ligada;
+    }
+
+    // Ajustar brilho
+    public void AjustarBrilho(int novoBrilho)
+    {
+        if (!_ligada)
+        {
+            Console.WriteLine("Erro: a lâmpada está desligada.");
+            return;
+        }
+
+        if (novoBrilho < 0 || novoBrilho > 100)
+        {
+            Console.WriteLine("Erro: brilho deve estar entre 0 e 100.");
+            return;
+        }
+
+        _brilho = novoBrilho;
+    }
+
+    // Sobrescrita
+    public override string ToString()
+    {
+        return $"Marca: {_marca}, Tecnologia: {_tecnologia}, " +
+               $"Estado: {(_ligada ? "Ligada" : "Desligada")}, " +
+               $"Brilho: {_brilho}%";
+    }
+}
